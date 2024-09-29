@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+	// this는 함수 호출 맥락(context)을 의미
+	// this는 arguments처럼 함수안에서 사용 할 수 있는 약속되어있는 변수
+	
+
+	// 함수 호출시 window 생략 == this는 객체를 받음 (동일)
+	// window === this 출력  -> window는 전역객체
+
+/*	function func() {
+		if(window === this) {
+			document.write('window === this');
+		}
+	}
+	func();
+*/	
+
+	// 메소드 호출 -> o === this
+	// 메소드를 호출 시 메소드가 소속되어있는 객체를 this로 접근 가능함을 보여줌
+	// window.func() -> this.func()	==> window.func() == func() ==> this.func()
+	// o.func() -> this.func()	==> o == this
+
+/*	var o = {
+		func : function() {
+			if(o === this) {
+				document.write('o === this');
+			}
+		}
+	}
+	o.func();
+*/
+
+
+	// 생성자(new)에서 this의 의미
+	// 함수에서 this는 함수가 소속되어있는 객체를 의미
+	// 
+
+/*	var funcThis = null;					// var funcThis = this로 바뀜 (하단 지역변수 funcThis에 var이 안붙어있어서)
+
+	function Func() {
+		funcThis = this;					// var이 안붙어있기 때문에 전역변수 null이 지역변수 this로 바뀜(var funcThis = this)
+	}
+
+	var o1 = Func();						// 일반 함수에서의 this 결과
+	if(funcThis === window) {				// this === window -> 함수를 호출하면 window 전역객체가 생략되어있기 때문에 this는 객체를 지칭
+		document.write('window </br>');
+	}
+
+	var o2 = new Func();					// 생성자(new)에서의 this 결과
+	if(funcThis === o2) {					// new는 새로운 객체를 만듬 -> 생성자를 통해 만들어진 객체는 o2에 담겨져있음 
+		document.write('o2 </br>')			// this는 객체(o2)를 받음
+	}
+*/
+
+	// apply, call에 관한 this 설명
+
+	// 함수는 apply, call, arguments라는 메소드를 가지고있음
+
+	// 함수 리터럴 (function ( ) {} / 객체 리터럴 : var i = { }, / 배열 리터럴 : var a = [ ]
+	// 함수 입력안하고 값을 편하게 만들어주는 것을 리터럴 이라고 함.
+	// ex) 함수 => function (x,y) {return x+y} == new Function('x','y','return x+y')
+	// ex) 배열 => var a = [1,2] == new Array(1,2)
+	// ex) 객체 => var a = {a : 1} == new Object();
+
+/*	function (x,y) {return x+y;}
+	sum(1,2);
+	
+	var sum2 = new Function('x','y','return x+y;'); 
+	sum(1,2);
+*/
+
+	//메소드는 객체에 포함(메소드는 객체의 노예?..벗어나지 못함) = master(객체) , slave(메소드) 비유
+
+/*	var o = {}
+	var p = {}
+	function func() {
+		switch(this) {							// -> switch는 if문과 대체제 역할을 함 <==> for, while문 처럼
+		case o :    							// -> switch 괄호안의 값(this)과 같은 case안에 들어있는 구간이 실행이 됨 (break전까지)
+			document.write('o <br/>');			// -> switch(this) == case o 면 break 전까지 실행 etc..
+			break;
+		case p :
+			document.write('p <br/>');
+			break;
+		case window :
+			document.write('window <br/>');
+			break;
+		}
+	}
+	func();				// -> this의 값은 window로 됨
+	func.apply(o);		// -> apply는 인자값을 함수 매개변수에 대입 -> this == o
+	func.apply(p);		// -> apply는 인자값을 함수 매개변수에 대입 -> this == p
+*/
+
+
+</script>
+</body>
+</html>

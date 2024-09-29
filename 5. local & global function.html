@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+	//유효범위 -> scope라 부름 : 변수의 수명
+	// 하기 함수는 local 출력 (지역변수 == local variable)
+	/*
+	var vscope = 'global';
+	function fscope() {
+		var vscope = 'local';
+		alert(vscope);
+	}
+	fscope();
+	*/
+
+	//하기 함수는 global 출력 (전역변수 == global variable)
+	/*
+	var vscope = 'global';
+	function fscope() {
+		alert(vscope);
+	}
+	fscope();
+	*/
+
+	//global 2번 출력
+	// 함수 밖 변수인 vscope을 출력하면 변수는 애플리케이션 전 지역에서 접근할수있다 -> 전역변수
+	/*
+	var vscope = 'global';
+	function fscope() {
+		alert(vscope);
+	}
+	function fscope2() {
+		alert(vscope);
+	}
+	fscope();
+	fscope2();
+	*/
+
+	//함수안에 변수(vscope = local)을 지정하게 되면 변수는 함수내에서만 접근
+	/*
+	var vscope = 'global';
+	function fscope() {
+		var vscope = 'local';
+		alert(vscope);
+	}
+	fscope();
+	*/
+
+	//함수안에 변수 lv를 출력시(alert)lv) -> fscope(); -> 변수 lv값 출력 / 하지만 함수 밖에서 alert(lv)출력은 undefined 나옴
+	// 이유는 함수내에서 출력시 지역변수이여서 지역변수는 지역내에서만 접근 가능 
+	/*
+	var vscope = 'global';
+	function fscope() {
+		var vscope = 'local';
+		var lv = 'local variables';
+		alert(lv);
+	}
+	fscope();
+	alert(lv);
+	*/
+
+
+	//fscope()함수내에 var vscope 입력 후 출력시 -> alert(vscope); -> global 출력
+	//fscope()함수내에 var 삭제 후 실행 -> local 출력
+	//이유 = 함수내(지역변수) var 삭제는 전역변수 수정이랑 동일 -> fscope()내 vscope = 'local' -> var vscope = 'global'이 local로 변경
+	// 그러므로 alert(vscope) -> 전역변수 var vscope의미 -> var vscope는 local
+	/*
+	var vscope = 'global';
+	function fscope() {
+		//vscope = 'local'
+		var	vscope = 'local';
+	}
+	fscope();
+	alert(vscope);
+	*/
+
+	//전역변수 / 지역변수 예제
+	// function a의  var i = 0;은 지역변수
+	// for(var i= 0은 전역변수, for구문 값으로 가져오는 a()는 지역변수 -> document.write(i)는 바로 위 a()의 값인 지역 변수)
+	// document.write(i) -> 지역변수인 var i = 0;의 값을 받아서 답은 0,1,2,3,4 출력 (지역변수는 함수내에서만 사용)
+	/*
+	function a () {
+		var i = 0;
+	}
+	for(var i = 0; i < 5; i++) {
+		a();
+		document.write(i);
+	}
+	*/
+
+
+	//functino a()의 값에서 var i = 0; -> i = 0; 으로 바꿈으로써 for 구문의 a값은 i = 0; -> 지역변수가 전역변수를 바꿔버림 -> for(var i = 0이 i = 0이 되어버림 -> 그래서 document.write(i)의 값이 무한루프
+	/*
+	function a () {
+		i = 0;
+	}
+	for(var i = 0; i < 5; i++) {
+		a();
+		document.write(i);
+	}
+	*/
+
+	// 전역변수를 불가피하게 사용하게 될 경우 어떻게 해야되는가.
+	// 자바스크립트 핵심가이드 책 나중에 읽기 (더글라스 머시기)
+	// 프로그래밍시 하기처럼 MYAPP이라는 전역변수 하나에 모든 변수 다 넣기 (다른사람 협업시 유용)
+	/*
+	var MYAPP = {}
+	MYAPP.calculator = {'left' : null, 'right' : null}
+	MYAPP.coordinator = {'left' : null,	'right' : null}
+	
+	// 상기랑 동일
+	//MYAPP.calculator = {
+	//	'left' : null,
+	//	'right' : null
+	//}
+	//MYAPP.coordinator = {
+	//	'left' : null,
+	//	'right' : null
+	//}	
+
+	MYAPP.calculator.left = 10;
+	MYAPP.calculator.right = 20;
+	function sum () {
+		return MYAPP.calculator.left + MYAPP.calculator.right;
+	}
+	document.write(sum());
+	*/
+
+	// 전역변수 1개로 사용 하고 싶을 경우 -> MYAPP으로 통일
+	// 전역변수 사용 안하고 싶을 경우 -> 익명함수 사용 or 함수로 포함 -> var MYAPP은 지역변수로 변환됨
+	//function my app() {
+	/*
+	(function() {
+		var MYAPP = {}
+		MYAPP.calculator = {'left' : null, 'right' : null}
+		MYAPP.coordinator = {'left' : null, 'right' : null}
+
+		MYAPP.calculator.left = 10;
+		MYAPP.calculator.right = 20;
+
+		sum = function () {
+			return MYAPP.calculator.left + MYAPP.calculator.right;
+		}
+		document.write(sum());
+	} ())
+	*/
+	//}
+	//my app();
+
+	//유효범위의 대상 (함수) -> 지역변수 지정은 함수로 제한됨
+	// 함수 내에서만 지정한 변수만 지역변수로 적용, for,while,if 문은 지역변수로 지정이 안됨. 하기 내용 확인!
+	//1. 지역변수가 아니기 때문에 for문 밖에서 name호출 가능
+	/*
+	for(var i = 0; i < 1; i ++) {
+		var name = 'coding everybody';
+	}
+	alert(name);
+	*/
+
+
+	//2. name함수안에 있기 때문에 지역변수 -> title호출시 함수 name 호출 필요
+	/*
+	name = function () {
+			var title = 'coding everybody';
+			return title;
+	}
+	name();
+	*/
+
+	//정적 유효범위 (lexical scoping)
+	// 사용될 때가 아닌 정의될 때의 전역 변수를 사용!
+	/*
+	var i = 5;  // -> 정의 될때 				//-> 전역변수
+
+	function a () {  		//-> i는 지역변수, 값은 10
+		var i = 10;  //-> 사용 될때
+		b();
+	}
+
+	function b () {
+		document.write(i);	 //-> i는 전역변수
+	}						 //-> i의 지역변수 존재 확인 후 지역변수 없기 때문에 전역변수 찾음 (var i = 5);
+							//-> 함수 b의 호출 시점에서 i의 전역 변수가 사용 됨, a의 지역변수 사용이 아님 			
+	a();
+	*/
+
+
+	// 함수 a값이 10을 원하면 함수a에 함수b를 넣어야 됨
+	// 함수는 함수내에서만 지역변수를 받음!
+	// 하기 함수 사용이 클로저 ! 외부함수에 내부함수를 포함
+	/*
+	var i = 5;
+	function a () {
+		function b () {
+			document.write(i);
+		}
+		var i = 10;
+		b();
+	}
+	a();
+	*/
+
+</script>
+</body>
+</html>

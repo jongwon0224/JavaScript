@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	//객체 = 배열과 유사 / 배열 : ['a','b','c'] = [0,1,2]  / 객체 : {'a' : 'first', 'b' : 'second','c' : 'third'};
+	//객체는 맵, 딕셔너리랑 비슷
+	//egoing,k8805,sorialgi는 key(인덱스), 10,6,80은 value(인덱스 값)
+	// 객체와 배열은 변수 필요 ! ex) var grades = {};
+	
+	// 객체만드는 방법 1
+	/*
+	var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};
+	*/
+
+	// 객체만드는 방법 2
+	/*
+	var grades = {};
+	grades['egoing'] = 10;
+	grades['k8805'] = 6;
+	grades['sorialgi'] = 80;
+	*/
+	
+	// 객체만드는 방법 3 (new object() 는 {}와 동일)
+	/*
+	var grades = new Object() ;
+	grades['egoing'] = 10;
+	grades['k8805'] = 6;
+	grades['sorialgi'] = 80;
+	*/
+
+
+	// 객체 값 가져오는 방법 -> 변수[인덱스(키 값)] (grades['egoing']) or 변수.인덱스(grades.egoing) = value(인덱스 값) 
+	// 배열 값 가져오는 방법 -> 변수+[숫자(0,1,2,3)]으로 값 출력
+	// 객체랑 배열 차이점 -> 인덱스 값 가져오는 방법은 변수+[] 동일 / []안에 인덱스를 넣으면 객체, []안에 숫자를 넣으면 배열
+	/*
+	var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};
+	//alert(grades['egoing']);
+	alert(grades.egoing);
+	alert(grades.k8805);
+	alert(grades.sorialgi);
+	*/
+
+
+	// for + in 구문 사용한 객체 사용 반복 작업
+	// 배열은 저장된 값이 순서가 있지만 객체는 순서가 없고 key, value로만 저장
+	//for in문은 for(key(인덱스 변수) in grades(객체)
+
+
+	//for in문은 배열에서도 사용 가능
+	/*
+	var a = ['a','b','c'];
+	for(var name in a) {
+		document.write(a[name]);
+	}
+	*/
+
+
+	// for in 구문 + <li>,</li> html리스트 사용, 리스트 사용 시 <br/>사용 안해도됨 
+	/*
+	var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};
+	for(key in grades) {
+		document.write('<li>'+key+' : '+' '+grades[key]+'</li>');
+	}
+	*/
+
+
+	// 1. for in 사용한 key 값 출력
+	/*
+	var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};
+	for(var a in grades) {
+		document.write(a+'<br/>');
+	}
+	*/
+
+	// 2. for in 사용한 value 값 출력
+	/*
+	var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};
+	for(var a in grades) {
+		document.write(grades[a]+'<br/>');
+	}
+	*/
+
+	// 3. for in 사용한 key + value 값 출력
+	/*
+	var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};
+	for(var a in grades) {
+		document.write(a.toUpperCase() +' : '+ grades[a]+ '<br/>');
+	}
+	*/
+
+
+	// 객체는 객체에 담을 수 있고 함수에도 담을 수 있다.
+
+	// 1. grades객체 안에 list출력 하는 방법 & list안에 egoing 개체값 출력하는 방법 -> grades['list']['egoing']
+	/*
+	var grades = {
+		'list' : {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80}
+	}
+	alert(grades['list']); -> {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80}
+	alert(grades['list']['egoing']); -> 10
+
+	
+	// 2. grades 객체 안에 함수 출력 법 -> grades['show'])();
+	var grades = {
+		'list' : {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80},
+		'show' : function () {
+			alert('Hello Wolrd');
+		}
+	}
+	alert(grades['show']());
+	*/
+
+
+	// 3. this는 this를 사용하는 함수를 포함한 객체의 변수 값 -> 'show'객체 안에 this사용은 show객체를 담고 있는 변수 grades 가르킴
+	// 3-1. 즉, this.list는 grades.list / grades['list']랑 같음
+	// 3-2. for in문 안에 name, this.list[name]은 콤마 사용으로 다른 값 추가 입력 가능.
+	// 3-3. name, this.list[name] = name은 key값, this.list는 this=grades, this.list는 grades.list. 즉 name은 grades.list의 키 값인 egoing, k8805, sorialgi 출력 -> name, this.list[name]은 name 키 값, grades[list][name]이랑 동일 -> 10, 6, 80 출력
+	
+	// 1. this.list 사용 예시
+	/*
+	var grades = {
+		'list' : {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80},
+		'show' : function () {
+			for(var name in this.list) {
+				console.log(name, this.list[name]);
+			}
+		}
+	}
+	grades.show();
+	*/
+
+
+	// 2. this.list 다른 방식으로 풀이
+	/*
+	var grades = {
+		'list' : {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80},
+		'show' : function () {
+			for(var name in grades['list']) {
+				console.log(name, grades['list'][name]);
+			}
+		}
+	}
+	grades.show();
+	*/
+
+</script>
+</body>
+</html>

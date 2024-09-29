@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	//클로저 : 내부함수가 외부함수의 맥락에 접근하는 방법
+	// inner 함수 = 내부함수 / outter함수 = 외부함수
+	// outter함수의 지역변수로 inner함수로 만듬
+
+/*	function outter() {
+		function inner () {
+			var title = 'coding everybody';
+			alert(title);
+		}
+		inner();
+	}
+	outter();
+
+	// var title = 외부함수에 정의되어 있는 지역변수
+	// inner함수안에 title의 정의되어 있지 않으면 바깥쪽 함수에서 title을 찾음 -> 결과 : coding everybody
+	// 내부함수에서 외부함수의 지역변수에 접근 할 수 있음 -> 클로저 정의
+	function outter () {
+		var title = 'coding everybody';
+		function inner () {
+			alert(title);
+		}
+		inner();
+	}
+	outter();
+*/
+
+	// 외부함수 : outter(), 내부함수 : function(){alert(title);}
+/*	function outter () {
+		var title = 'coding everybody';
+		return function () {
+			alert(title);
+		}
+	}
+	var	inner = outter();
+	inner();
+*/
+
+	//private variable
+	// 정보를 아무나 수정하는 행위를 방지하는 것
+	//메소드(get_title, set-title) : 내부함수 / facotry_movie(title){} : 외부함수
+	//외부함수 매개변수인 title값은 매서드인 set_title로만 수정 가능하게 만듬 -> private varibale
+	//외부함수 매개변수 title값은 매서드 get_title로만 가져오게 만듬
+/*	function factory_movie(title) {
+		return {
+			get_title : function () {
+				return title;					//-> title 값은 factory_movie 함수의 매개변수
+			},
+			set_title : function (_title) {
+				if(typeof _title === 'String') {
+					title = _title;					// -> _title = title -> tite은 factory_movie 함수의 매개변수 반환					
+				} else {
+					alert('제목은 문자열이어야 합니다.');
+				}
+			}
+		}
+	}
+	var	ghost = factory_movie('Ghost in the shell');	// -> ghost in the shell : 인자 값
+	var matrix = factory_movie('Matrix');				// -> matrix : 인자 값
+
+	alert(ghost.get_title());							// -> get_title()이 괄호로 인하여 함수 실행
+	alert(matrix.get_title());
+
+	ghost.set_title('1');
+
+	alert(ghost.get_title());
+	alert(matrix.get_title());
+*/
+
+	//클로저 사용시 자주 범람하는 실수
+/*	var arr = [];
+	for(var i = 0; i < 5; i++) {
+		arr[i] = function () {
+			return (i); 			//-> return (i)의 i는 for문의 i++의 i값을 받아야됨
+		}
+	}
+	for(var index in arr) {
+		console.log(arr[index]());		// -> arr[index]()는 arr함수 호출 -> arr[i] = function() {return (i)}; 실행
+	}
+ // 결과-> 5라는 값이 5번 출력
+ // 이유 -> for문의 i++값이 return(i)의 값이랑 다름
+
+	var arr = [];
+	for(var i = 0; i < 5; i++) {
+		arr[i] = function (num) {		// -> 함수의 매개변수로  num설정 + 인자값으로 i입력
+			return function () {		// -> 클로저 실행 -> 외부함수를 받아줄 내부함수 설정 -> 리턴값으로 매개변수 num설정
+				return num;				// -> 내부함수(2번째) 바로 실행하기 위해서 바로 호출 -> function(){return num}(i);
+			}
+		}(i);							// -> 인자값으로 i입력함으로써 외부함수(num)에 i 대입 
+	}
+	for(var index in arr) {
+		console.log(arr[index]());
+	}
+*/
+
+
+
+
+
+</script>
+</body>
+</html>

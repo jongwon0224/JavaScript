@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	
+	// Object라는 구체적인 이름을 가지고 있는 object(객체)가 있음
+	// object는 배열같은 데이터를 저장하는 그릇
+	// 1. 객체지향 프로그래밍
+	// 1-1. var a = {'name' : 'justine',
+	//				'introduce' : function () {
+	//			    	}
+	//				}
+	// 2. prototype을 활용하여 객체를 상속함
+    //        sub.prototype.name = new Ultra();
+	//  	  sub.prototype.call = function () {}
+
+	// 2-1. Object -> ultra -> super -> sub (상속..이전 자료 참고);
+	// 2-2. Object 객체의 prototype은 모든 객체의 속성(property)
+	// 2-3. Object는 window처럼 자바스크립트 내장 객체임.
+
+
+	// Object.keys == Object.keys = function () {};
+	// O.toString() == Object.prototype.toString = function () {}; 
+
+	// Object에서 prototype이 있는 것과 없는 것이 차이	 => 값 출력 시 : Object.keys(arr)으로 출력 => Object.keys(arr);
+	// prototype.toString을 사용할 경우는 1. 객체를 만듬 2. 값 출력 할 때 : 객체를 담고 있는 변수.toString임 => o.toString();
+	// Object.keys는 출력시 인자값 필요 < == > o.toString()은 인자값 필요없음
+ 
+	//Object.keys()  // ==> 객체가 있을때 객체가 가지고 있는 key값들을 return해주는 메소드(ojbect.keys())
+/*	var arr = ['a', 'b', 'c'];
+	console.log('Object.keys(arr)', Object.keys(arr)); // => 배열의 원소를 리턴 ['0','1','2'] => key값만 리턴
+
+
+
+	//Object.prototype.toString() ==> 객체가 가지고 있는 값을 출력(Object.toString())
+	var o = new Object();
+	console.log('o.toString()', o.toString());
+
+	var a = new Array(1,2,3);
+	console.log('a.toString()', a.toString());
+*/
+
+
+	//Object객체 확장하여 어느 객체에서 사용 할 수 있는 메소드 만드는 방법
+
+	// 1. 객체
+	// prototype 사용으로 인해 원하지 않게 property값으로 contain도 포함됨 ==> 주의 사항
+	// Object를 사용하면 광역객체이기 때문에 모든 객체에 영향을 줌. ===> Object.prototype.contain ~~
+	// 최대한 Object사용 하지 말것
+
+/*	Object.prototype.contain = function (needle) {
+		for(var name in this) {
+			if(this[name] === needle) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	var o = {'name':'egoing', 'city':'Seoul'}
+	console.log(o.contain('egoing'));
+
+	// 2. 배열
+	var a = ['egoing','leezche','grapittie'];
+	console.log(a.contain('leezche'));	
+*/
+
+/*	for(var name in o) {
+		console.log(name);
+	}
+*/
+	// 위 for구문 출력시 name(property)값으로 name, city, contain이 출력됨
+	// 이유는..Object.prototype.contain으로 인해 contain도 property에 포함됨
+
+
+
+	// 상기 오류 방지용으로 hasOwnProperty 사용
+	// 객체의 property값을 가져옴 => o.hasOwnProperty ==> name,city 출력
+/*	for(var name in a) {
+		if(a.hasOwnProperty(name)) {		// => hasOwnProperty는 True / False임
+			console.log(name);
+		}	
+	}
+*/
+
+	// 데이터 타입
+	// 1. 원시 데이터 타입 (기본 데이터 타입) => 숫자, 문자열, 불리얼(true/false), null, undefined
+	// 2. 객체 데이터 타입 (참조 데이터 타입) => 위 5가지 제외한 나머지는 참조 데이터 타입(객체 데이터 타입)
+
+	// 복제
+	// var a = 1 ==> 1은 숫자. 즉, 원시데이터 타입이여서 복제가 됨
+/*	var a = 1;
+	var b = a;	==> a가 원시데이터여서 a의 값이 새로 복제되어 b에 담겨짐	====>  (a=1) (a=1,b=a) 이런느낌
+	b = 2;
+	console.log(a);  // 1
+
+	// 참조
+	// b에 담겨있는 객체의 property값을 변경하면 a의 property값이 변경된다. ===> (a = b) 이런느낌
+	var a = {'id' : 1};
+	var b = a;
+	b.id = 2;
+	console.log(a.id); // 2
+
+
+	var a = {'id' : 1};			==> (a) (a=b) 이런느낌
+	var b = a;
+    b = {'id' : 2}; 			// ==> b에 객체를 생성했기 때문에 a 값이 b로 바뀌지않음 === b=2; 랑 동일함.
+	console.log(a.id); // 1
+*/
+
+
+	함수에서의 참조
+
+	//ex)원시 데이터 타입을 인자로 넘겼을 경우
+	var a = 1;				
+	function func(b) {
+		b = 2;
+	}
+	func(a);				// ==> b = a
+	console.log(a);			// 1
+
+
+	객체에서의 참조
+
+	var a = {'id' : 1};
+	function func b {		
+		b = {'id':2};
+	}
+	func(a);
+	console.log(a.id);		// 1
+
+	var a = {'id' : 1};
+	function func(b) {		
+		b.id = 2;
+	}
+	func(a);
+	console.log(a.id);		// 2
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
